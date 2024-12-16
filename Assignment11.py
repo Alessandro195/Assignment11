@@ -140,7 +140,7 @@ class DoctorManager:
                     timing = docSplit[3]
                     qualification = docSplit[4]
                     roomNb = docSplit[5]
-                    # doctor(id,name,specilist,timing,qualification,roomNb)
+                    Doctor(id,name,specilist,timing,qualification,roomNb)
                     self.doctorsList.append(docSplit)
                 num=num+1
                        
