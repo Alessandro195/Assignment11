@@ -80,7 +80,7 @@ class ManagementMethod:
             choice = input("Enter your choice: ")
             if not self.handle_choice(choice):
                 break
-class doctormanager: 
+class DoctorManager: 
     def __init__(self):#Xander
         self.doctorsList=list(" ")
         self.read_doctors_file()
