@@ -47,8 +47,8 @@ class Patient:
 class ManagementMethod:
     def __init__(self):
         # Initialize manager objects for doctors and patients - Alessandro
-        self.doctor_manager = DoctorManager()
-        self.patient_manager = PatientManager()
+        self.doctor_manager = DoctorManager
+        self.patient_manager = PatientManager
 
     # Display the menu options for the user - Alessandro
     def display_menu(self):
@@ -117,7 +117,7 @@ class DoctorManager:
         return formatedList
 
 
-    def enter_dr_info(self):#xander
+    def enter_dr_info(self):#Xander
         id = int(input("Enter the doctor's ID: "))
         name = input("Enter the doctor's name: ")
         specialty = input("Enter the doctor's specialty: ")
@@ -134,6 +134,7 @@ class DoctorManager:
                 if num != 0:
                     doc = line.rstrip()
                     docSplit=list(doc.split('_'))
+                    print(docSplit)
                     id = docSplit[0]
                     name = docSplit[1]
                     specilist = docSplit[2]
@@ -167,19 +168,94 @@ class DoctorManager:
     def display_doctors_list():
         return
     
-    def Write_list_of_doctors_to_file():
-        return
-    
-    def add_dr_to_file(self): #Xander
-        new_doc=self.enter_dr_info()
-        self.doctorsList.append([new_doc[0],new_doc[1],new_doc[2],new_doc[3],new_doc[4],new_doc[5]])
+    def Write_list_of_doctors_to_file(self):#Xander
         formatedList=self.format_dr_info()
         with open('doctors.txt','w') as doctor:
             doctor.write("id_name_specilist_timing_qualification_roomNb\n")
             for doc in formatedList:
                 print(doc)
                 doctor.writelines(f"{doc}\n")
+    
+    def add_dr_to_file(self): #Xander
+        new_doc=self.enter_dr_info()
+        self.doctorsList.append([new_doc[0],new_doc[1],new_doc[2],new_doc[3],new_doc[4],new_doc[5]])
+        self.Write_list_of_doctors_to_file
         print(f"Doctor whose ID is {new_doc[0]} has been added")
+
+class PatientManager:
+    def __init__(self):#Xander
+        self.patientsList=list(" ")
+        self.read_patient_file()
+        self.patientsList.remove(' ')
+
+    def format_patient_info_for_file(self):#Xander
+        formatedList=list(' ')
+        for pat in self.patientsList:
+            pat= str(f"{pat[0]}_{pat[1]}_{pat[2]}_{pat[3]}_{pat[4]}")
+            formatedList.append(pat)
+        formatedList.remove(' ')
+        return formatedList
+    
+    def enter_patient_info(self):#Xander
+        id = int(input("Enter Patient ID: "))
+        name = input("Enter Patient name: ")
+        disease = input("Enter Patient Disease: ")
+        gender = input("Enter Patient gender: ")
+        age = int(input("Enter Patient age: "))
+        new_pat_info=(id,name,disease,gender,age)
+        return new_pat_info
+    
+    def read_patient_file(self):#Xander
+        with open('patients.txt') as patient:
+            num=0
+            for line in patient:
+                if num != 0:
+                    pat = line.rstrip()
+                    patSplit=list(pat.split('_'))
+                    print(patSplit)
+                    id = patSplit[0]
+                    name = patSplit[1]
+                    disease = patSplit[2]
+                    gender = patSplit[3]
+                    age = patSplit[4]
+                    Doctor(id,name,disease,gender,age)
+                    self.patientsList.append(patSplit)
+                num=num+1
+
+    def search_patient_by_id():
+        id = int(input("\nEnter the patient Id: "))
+            
+        print("Can't find the patient with the same ID on the system")
+
+    def display_patient_info(self):#Xander
+        print("ID   Name                   Disease         Gender          Age\n")
+        for pat in self.patientsList:
+            print(f"{(pat)[0]:<5} {(pat)[1]:<20} {(pat)[2]:<15} {(pat)[3]:<15} {(pat)[4]:<15}\n")
+
+    def edit_patient_info_by_id(self):
+        return
+    
+    def display_patient_list():
+        return
+    
+    def Write_list_of_patient_to_file(self):#Xander
+        formatedList=self.format_patient_info_for_file()
+        with open('patients.txt','w') as patient:
+            patient.write("id_name_specilist_timing_qualification_roomNb\n")
+            for pat in formatedList:
+                print(pat)
+                patient.writelines(f"{pat}\n")
+
+    def add_patient_to_file(self): #Xander
+        new_pat=self.enter_patient_info()
+        self.patientsList.append([new_pat[0],new_pat[1],new_pat[2],new_pat[3],new_pat[4]])
+        self.Write_list_of_patient_to_file
+        print(f"Doctor whose ID is {new_pat[0]} has been added")
+    
+
+    
+
+
         
 # If this script is run directly, start the management system - Alessandro
 if __name__ == "__main__":
