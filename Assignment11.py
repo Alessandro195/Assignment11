@@ -102,7 +102,85 @@ class ManagementMethod:
             if not self.handle_choice(choice):
                 break
 
+class DoctorManager: 
+    def __init__(self):#Xander
+        self.doctorsList=list(" ")
+        self.read_doctors_file()
+        self.doctorsList.remove(' ')
+        
+    def format_dr_info(self):#Xander
+        formatedList=list(' ')
+        for doc in self.doctorsList:
+            doc= str(f"{doc[0]}_{doc[1]}_{doc[2]}_{doc[3]}_{doc[4]}_{doc[5]}")
+            formatedList.append(doc)
+        formatedList.remove(' ')
+        return formatedList
 
+
+    def enter_dr_info(self):#xander
+        id = int(input("Enter the doctor's ID: "))
+        name = input("Enter the doctor's name: ")
+        specialty = input("Enter the doctor's specialty: ")
+        timing = input("Enter the doctor's timing (e.g., 7am-10pm): ")
+        qualification = input("Enter the doctor's qualification: ")
+        room_number = int(input("Enter the doctor's room number: "))
+        new_doc_info=(id,name,specialty,timing,qualification,room_number)
+        return new_doc_info
+    
+    def read_doctors_file(self):#Xander
+        with open('doctors.txt') as doctor:
+            num=0
+            for line in doctor:
+                if num != 0:
+                    doc = line.rstrip()
+                    docSplit=list(doc.split('_'))
+                    id = docSplit[0]
+                    name = docSplit[1]
+                    specilist = docSplit[2]
+                    timing = docSplit[3]
+                    qualification = docSplit[4]
+                    roomNb = docSplit[5]
+                    # doctor(id,name,specilist,timing,qualification,roomNb)
+                    self.doctorsList.append(docSplit)
+                num=num+1
+                       
+    def search_doctor_by_id():
+        id = int(input("\nEnter the doctor Id: "))
+        
+        print("Can't find the doctor with the same ID on the system")
+    
+    def search_doctor_by_name():
+        name = input("\nEnter the doctor name: ").strip()
+
+        print("\nId   Name                   Speciality      Timing          Qualification   Room Number")
+        return
+    
+    def display_doctor_info(self):#Xander
+        print("Id    Name                 Speciality      Timing          Qualification   Room Number\n")
+        for doc in self.doctorsList:
+            print(f"{(doc)[0]:<5} {(doc)[1]:<20} {(doc)[2]:<15} {(doc)[3]:<15} {(doc)[4]:<15} {(doc)[5]} \n")
+
+    
+    def edit_doctor_info(self):
+        return
+    
+    def display_doctors_list():
+        return
+    
+    def Write_list_of_doctors_to_file():
+        return
+    
+    def add_dr_to_file(self): #Xander
+        new_doc=self.enter_dr_info()
+        self.doctorsList.append([new_doc[0],new_doc[1],new_doc[2],new_doc[3],new_doc[4],new_doc[5]])
+        formatedList=self.format_dr_info()
+        with open('doctors.txt','w') as doctor:
+            doctor.write("id_name_specilist_timing_qualification_roomNb\n")
+            for doc in formatedList:
+                print(doc)
+                doctor.writelines(f"{doc}\n")
+        print(f"Doctor whose ID is {new_doc[0]} has been added")
+        
 # If this script is run directly, start the management system - Alessandro
 if __name__ == "__main__":
     system = ManagementMethod()
